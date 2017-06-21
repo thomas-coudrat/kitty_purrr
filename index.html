@@ -1,0 +1,100 @@
+<head>
+  <title>Kitty purrr</title>
+  <!-- HTML land -->
+
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <style style="text/css">
+    /*CSS land*/
+
+    .main_cont{
+      width:70%;
+      margin:auto;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    #cat_pic{
+      width: 30%;
+    }
+
+    #cat_button{
+      width: 10%;
+    }
+
+  </style>
+
+
+<body>
+
+
+  <div class="main_cont">
+    <h1>Kitty purrr</h1>
+    <button id="cat_button" type="button">Super kitty</button>
+    <img id="cat_pic" src="http://www.cats.org.uk/uploads/images/pages/photo_latest14.jpg">
+  </div>
+
+
+  <script style="text/javascript">
+  // Javascript land
+
+  // 1 - pull HTML element into JS land
+
+  var d3 = Plotly.d3;
+  var my_cat_pic = d3.select("#cat_pic");
+  var my_cat_button = d3.select("#cat_button");
+  var img_kitty = "http://www.cats.org.uk/uploads/images/pages/photo_latest14.jpg"
+  var img_tiger = "https://cdn.pixabay.com/photo/2016/04/20/23/47/tiger-1342385_960_720.jpg"
+  //var audio_kitty = "Kitty-meow.mp3"
+  var audio_kitty = "http://www.wavlist.com/soundfx/002/cat-meow8.wav"
+  var audio_tiger = "http://www.wavlist.com/soundfx/007/lion-purr2.wav"
+  var sound_kitty = new Audio(audio_kitty);
+  var sound_tiger = new Audio(audio_tiger);
+
+  // 2 - put and 'even listener' onto that element
+
+  my_cat_pic.on("mouseover", roar_kitty);
+  my_cat_button.on("click", button_switch);
+
+  // 3 - make JS change HTML of the page
+
+  function roar_kitty(){
+    //console.log("miaw")
+    //window.alert("Miaw!!")
+    sound_kitty.play();
+    //console.log("kitty")
+  }
+
+  function roar_tiger(){
+    sound_tiger.play();
+    //console.log("tiger")
+  }
+
+  function switch_to_tiger(){
+    roar_tiger();
+    my_cat_pic.on("mouseover", roar_tiger);
+    my_cat_pic.attr("src", img_tiger);
+    my_cat_button.text("Mini tiger")
+  }
+
+  function switch_to_kitty(){
+    roar_kitty();
+    my_cat_pic.on("mouseover", roar_kitty);
+    my_cat_pic.attr("src", img_kitty);
+    my_cat_button.text("Super kitty");
+  }
+
+  function button_switch(){
+    var button_text = document.querySelector("#cat_button").textContent;
+    console.log(button_text)
+    if (button_text == "Super kitty")
+      switch_to_tiger();
+    else if (button_text == "Mini tiger")
+      switch_to_kitty();
+  }
+
+  </script>
+</body>
